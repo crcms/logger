@@ -1,0 +1,48 @@
+{
+  "name": "crcms/logger",
+  "description": "Mongodb log extension based on laravel logs.",
+  "keywords": [
+    "log",
+    "logger",
+    "mongodb",
+    "laravel",
+    "php"
+  ],
+  "homepage": "http://blog.crcms.cn",
+  "support": {
+    "issues": "https://github.com/crcms/logger/issues",
+    "source": "https://github.com/crcms/logger"
+  },
+  "authors": [
+    {
+      "name": "simon",
+      "email": "simon@crcms.cn"
+    }
+  ],
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": "^7.2.4",
+    "illuminate/log": "5.7.*",
+    "jenssegers/mongodb": "^3.4"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.2",
+    "phpunit/phpunit": "^7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "CrCms\\Log\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CrCms\\Log\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
