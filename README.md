@@ -15,6 +15,8 @@ use CrCms\Log\MongoDBLogger;
 'channels' => [
     'mongo' => [
         'driver' => 'custom',
+        // If it is empty, the default app.env
+        //'name' => env('APP_ENV', 'production'),
         'via' => MongoDBLogger::class,
         'database' => [
             'driver' => 'mongodb',
