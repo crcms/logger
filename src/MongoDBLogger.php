@@ -59,12 +59,16 @@ class MongoDBLogger
     {
         $driver = $config['database']['driver'];
 
+        $database = empty($config['database']['database']) ?
+            $this->config->get("database.connections.{$driver}.database") :
+            $config['database']['database'];
+
         return new MongoLogger(
             $this->config->get('app.name', 'logger'),
             [
                 new MongoDBHandler(
                     $this->db->connection($driver)->getMongoClient(),
-                    $this->config->get("database.connections.{$driver}.database"),
+                    $database,
                     $config['database']['collection']
                 )
             ]
