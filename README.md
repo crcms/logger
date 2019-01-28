@@ -18,6 +18,8 @@ use CrCms\Log\MongoDBLogger;
         'via' => MongoDBLogger::class,
         'database' => [
             'driver' => 'mongodb',
+            // If it is empty, the default database will be selected.
+            'database' => 'logger',
             'collection' => 'logger',
         ],
     ],
