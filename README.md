@@ -1,6 +1,8 @@
 # logger
-Mongodb log extension based on laravel logs
 
+[![StyleCI](https://github.styleci.io/repos/167371373/shield?branch=master)](https://github.styleci.io/repos/167371373)
+
+Mongodb log extension based on laravel logs
 
 ## config
 
