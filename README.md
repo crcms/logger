@@ -1,5 +1,7 @@
 # logger
 
+[![Latest Stable Version](https://poser.pugx.org/crcms/logger/v/stable)](https://packagist.org/packages/crcms/logger)
+[![License](https://poser.pugx.org/crcms/logger/license)](https://packagist.org/packages/crcms/logger)
 [![StyleCI](https://github.styleci.io/repos/167371373/shield?branch=master)](https://github.styleci.io/repos/167371373)
 
 Mongodb log extension based on laravel logs
