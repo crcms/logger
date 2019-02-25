@@ -10,7 +10,7 @@ use Monolog\Handler\MongoDBHandler;
 use Monolog\Logger as MongoLogger;
 
 /**
- * Class MongoDBLogger
+ * Class MongoDBLogger.
  */
 class MongoDBLogger
 {
@@ -31,8 +31,9 @@ class MongoDBLogger
 
     /**
      * MongoDBLogger constructor.
-     * @param Repository $config
-     * @param Dispatcher $events
+     *
+     * @param Repository      $config
+     * @param Dispatcher      $events
      * @param DatabaseManager $db
      */
     public function __construct(DatabaseManager $db, Repository $config, Dispatcher $events)
@@ -44,6 +45,7 @@ class MongoDBLogger
 
     /**
      * @param array $config
+     *
      * @return Logger
      */
     public function __invoke(array $config)
@@ -53,6 +55,7 @@ class MongoDBLogger
 
     /**
      * @param array $config
+     *
      * @return MongoLogger
      */
     protected function mongoLogger(array $config): MongoLogger
@@ -74,7 +77,7 @@ class MongoDBLogger
                     $this->db->connection($driver)->getMongoClient(),
                     $database,
                     $config['database']['collection']
-                )
+                ),
             ]
         );
     }
