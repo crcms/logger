@@ -1,4 +1,4 @@
-# logger
+# Logger
 
 [![Latest Stable Version](https://poser.pugx.org/crcms/logger/v/stable)](https://packagist.org/packages/crcms/logger)
 [![License](https://poser.pugx.org/crcms/logger/license)](https://packagist.org/packages/crcms/logger)
@@ -6,7 +6,12 @@
 
 Mongodb log extension based on laravel logs
 
-## config
+## Install
+```
+composer require crcms/logger
+```
+
+## Config
 
 
 Modify the following two configuration files
