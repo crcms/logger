@@ -6,6 +6,7 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Log\Logger;
+use Illuminate\Log\ParsesLogConfiguration;
 use Monolog\Handler\MongoDBHandler;
 use Monolog\Logger as MongoLogger;
 
@@ -14,6 +15,8 @@ use Monolog\Logger as MongoLogger;
  */
 class MongoDBLogger
 {
+    use ParsesLogConfiguration;
+
     /**
      * @var DatabaseManager
      */
@@ -32,8 +35,8 @@ class MongoDBLogger
     /**
      * MongoDBLogger constructor.
      *
-     * @param Repository      $config
-     * @param Dispatcher      $events
+     * @param Repository $config
+     * @param Dispatcher $events
      * @param DatabaseManager $db
      */
     public function __construct(DatabaseManager $db, Repository $config, Dispatcher $events)
@@ -60,25 +63,46 @@ class MongoDBLogger
      */
     protected function mongoLogger(array $config): MongoLogger
     {
-        $driver = $config['database']['driver'];
+        $channel = $this->parseChannelName($config);
 
-        $channel = empty($config['name']) ?
-            $this->config->get('app.env', 'production') :
-            $config['name'];
-
-        $database = empty($config['database']['database']) ?
-            $this->config->get("database.connections.{$driver}.database") :
-            $config['database']['database'];
+        $database = $this->parseDatabase($config);
 
         return new MongoLogger(
             $channel,
             [
                 new MongoDBHandler(
-                    $this->db->connection($driver)->getMongoClient(),
+                    $this->db->connection($config['database']['driver'])->getMongoClient(),
                     $database,
-                    $config['database']['collection']
+                    $config['database']['collection'],
+                    $this->level($config)
                 ),
             ]
         );
+    }
+
+    /**
+     * parseDatabase
+     *
+     * @param array $config
+     * @return string
+     */
+    protected function parseDatabase(array $config): string
+    {
+        return empty($config['database']['database']) ?
+            $this->config->get("database.connections.{$config['database']['driver']}.database") :
+            $config['database']['database'];
+    }
+
+    /**
+     * channelName
+     *
+     * @param array $config
+     * @return string
+     */
+    protected function parseChannelName(array $config): string
+    {
+        return empty($config['name']) ?
+            $this->config->get('app.env', 'production') :
+            $config['name'];
     }
 }
