@@ -3,9 +3,7 @@
 namespace CrCms\Log;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Log\Logger;
 use Illuminate\Log\ParsesLogConfiguration;
 use Monolog\Handler\MongoDBHandler;
 use Monolog\Logger as MongoLogger;
@@ -28,32 +26,15 @@ class MongoDBLogger
     protected $config;
 
     /**
-     * @var Dispatcher
-     */
-    protected $events;
-
-    /**
      * MongoDBLogger constructor.
      *
      * @param Repository $config
-     * @param Dispatcher $events
      * @param DatabaseManager $db
      */
-    public function __construct(DatabaseManager $db, Repository $config, Dispatcher $events)
+    public function __construct(DatabaseManager $db, Repository $config)
     {
         $this->db = $db;
         $this->config = $config;
-        $this->events = $events;
-    }
-
-    /**
-     * @param array $config
-     *
-     * @return Logger
-     */
-    public function __invoke(array $config)
-    {
-        return new Logger($this->mongoLogger($config), $this->events);
     }
 
     /**
@@ -61,7 +42,7 @@ class MongoDBLogger
      *
      * @return MongoLogger
      */
-    protected function mongoLogger(array $config): MongoLogger
+    public function __invoke(array $config): MongoLogger
     {
         return new MongoLogger(
             $this->parseChannel($config),
