@@ -69,14 +69,23 @@ class MongoDBLogger
 
         return new MongoLogger(
             $channel,
-            [
-                new MongoDBHandler(
-                    $this->db->connection($config['database']['driver'])->getMongoClient(),
-                    $database,
-                    $config['database']['collection'],
-                    $this->level($config)
-                ),
-            ]
+            [$this->mongoHandler($config),]
+        );
+    }
+
+    /**
+     * mongoHandler
+     *
+     * @param array $config
+     * @return MongoDBHandler
+     */
+    protected function mongoHandler(array $config): MongoDBHandler
+    {
+        return new MongoDBHandler(
+            $this->db->connection($config['database']['driver'])->getMongoClient(),
+            $database,
+            $config['database']['collection'],
+            $this->level($config)
         );
     }
 
