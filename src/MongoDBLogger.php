@@ -63,12 +63,8 @@ class MongoDBLogger
      */
     protected function mongoLogger(array $config): MongoLogger
     {
-        $channel = $this->parseChannelName($config);
-
-        $database = $this->parseDatabase($config);
-
         return new MongoLogger(
-            $channel,
+            $this->parseChannel($config),
             [$this->mongoHandler($config),]
         );
     }
@@ -83,7 +79,7 @@ class MongoDBLogger
     {
         return new MongoDBHandler(
             $this->db->connection($config['database']['driver'])->getMongoClient(),
-            $database,
+            $this->parseDatabase($config),
             $config['database']['collection'],
             $this->level($config)
         );
@@ -103,15 +99,12 @@ class MongoDBLogger
     }
 
     /**
-     * channelName
+     * getFallbackChannelName
      *
-     * @param array $config
      * @return string
      */
-    protected function parseChannelName(array $config): string
+    protected function getFallbackChannelName()
     {
-        return empty($config['name']) ?
-            $this->config->get('app.env', 'production') :
-            $config['name'];
+        return $this->config->get('app.env', 'production');
     }
 }
