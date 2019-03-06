@@ -2,11 +2,11 @@
 
 namespace CrCms\Log;
 
-use Illuminate\Contracts\Config\Repository;
+use Monolog\Logger as MongoLogger;
+use Monolog\Handler\MongoDBHandler;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Log\ParsesLogConfiguration;
-use Monolog\Handler\MongoDBHandler;
-use Monolog\Logger as MongoLogger;
+use Illuminate\Contracts\Config\Repository;
 
 /**
  * Class MongoDBLogger.
@@ -46,12 +46,12 @@ class MongoDBLogger
     {
         return new MongoLogger(
             $this->parseChannel($config),
-            [$this->mongoHandler($config),]
+            [$this->mongoHandler($config)]
         );
     }
 
     /**
-     * mongoHandler
+     * mongoHandler.
      *
      * @param array $config
      * @return MongoDBHandler
@@ -67,7 +67,7 @@ class MongoDBLogger
     }
 
     /**
-     * parseDatabase
+     * parseDatabase.
      *
      * @param array $config
      * @return string
@@ -80,7 +80,7 @@ class MongoDBLogger
     }
 
     /**
-     * getFallbackChannelName
+     * getFallbackChannelName.
      *
      * @return string
      */
